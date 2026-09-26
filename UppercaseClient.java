@@ -5,7 +5,7 @@ public class UppercaseClient {
     public static void main(String[] args) {
         if (args.length != 2) {
             System.err.println(
-                    "Error: Must include host name and port number. (java UppercaseClient <host name> <port number>)");
+                    "Error: Must include host name and port number. (Should be: java UppercaseClient <host name> <port number>)");
             System.exit(1);
         }
 
@@ -13,19 +13,21 @@ public class UppercaseClient {
         int portNumber = Integer.parseInt(args[1]);
 
         try (
-                Socket socket = new Socket(hostName, portNumber);
-                PrintWriter out = new PrintWriter(socket.getOutputStream(), true);
-                BufferedReader in = new BufferedReader(
-                        new InputStreamReader(socket.getInputStream()));
-                BufferedReader stdIn = new BufferedReader(
-                        new InputStreamReader(System.in))) {
+            Socket socket = new Socket(hostName, portNumber);
+            PrintWriter out = new PrintWriter(socket.getOutputStream(), true);
+            BufferedReader in = new BufferedReader(
+                    new InputStreamReader(socket.getInputStream()));
+            BufferedReader stdIn = new BufferedReader(
+                        new InputStreamReader(System.in))
+        ) {
+            System.out.println("Connected to server. Type a message and press Enter:");
             String userInput;
             while ((userInput = stdIn.readLine()) != null) {
                 out.println(userInput);
                 System.out.println("Server: " + in.readLine());
             }
         } catch (UnknownHostException e) {
-            System.err.println("Don't know about host " + hostName);
+            System.err.println("Can't find host " + hostName);
         } catch (IOException e) {
             System.err.println("Couldn't connect to " + hostName + ": " + e.getMessage());
         }
