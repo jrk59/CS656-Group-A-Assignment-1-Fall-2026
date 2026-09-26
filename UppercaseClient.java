@@ -24,7 +24,12 @@ public class UppercaseClient {
             String userInput;
             while ((userInput = stdIn.readLine()) != null) {
                 out.println(userInput);
-                System.out.println("Server: " + in.readLine());
+                String response = in.readLine();
+                if (response == null) {
+                    System.out.println("Server has disconnected.");
+                    break;
+                }
+                System.out.println("Server: " + response);
             }
         } catch (UnknownHostException e) {
             System.err.println("Can't find host " + hostName);
