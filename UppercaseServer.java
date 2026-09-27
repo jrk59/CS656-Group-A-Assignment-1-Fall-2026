@@ -4,11 +4,16 @@ import java.net.*;
 public class UppercaseServer {
     public static void main(String[] args) {
         if (args.length != 1) {
-            System.err.println("Error: Must include port number. (Should be: java UppercaseServer <port number>)");
+            System.err.println("Error: Must include port number as argument. (Should be: java UppercaseServer.java <port number>)");
             System.exit(1);
         }
-
-        int portNumber = Integer.parseInt(args[0]);
+        int portNumber = 0;
+        try {
+            portNumber = Integer.parseInt(args[0]);
+        } catch (NumberFormatException e) {
+            System.err.println("Argument must be valid port number between 2000 and 10000.");
+            System.exit(1);
+        }
         if (portNumber <= 2000 || portNumber >= 10000) {
             System.err.println("Port must be between 2000 and 10000.");
             System.exit(1);
