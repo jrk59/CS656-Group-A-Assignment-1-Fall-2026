@@ -5,12 +5,18 @@ public class UppercaseClient {
     public static void main(String[] args) {
         if (args.length != 2) {
             System.err.println(
-                    "Error: Must include host name and port number. (Should be: java UppercaseClient <host name> <port number>)");
+                    "Error: Must include host name and port number. (Should be: java UppercaseClient.java <host name> <port number>)");
             System.exit(1);
         }
 
         String hostName = args[0];
-        int portNumber = Integer.parseInt(args[1]);
+        int portNumber = 0;
+        try {
+            portNumber = Integer.parseInt(args[1]);
+        } catch (NumberFormatException e) {
+            System.err.println("Second argument must be valid port number.");
+            System.exit(1);
+        }
 
         try (
             Socket socket = new Socket(hostName, portNumber);
